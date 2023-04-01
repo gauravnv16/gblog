@@ -27,12 +27,12 @@ export const NavBar = () => {
             setUser(JSON.parse(user));
             setIsLoggedIn(true);
         }
-    })
+    },[])
     return (
         <>
             <nav className="flex p-5 justify-between items-center">
             <h1 className="text-2xl font-bold">Gblog</h1>
-            <ul className="flex space-x-5" 
+            <ul className="flex space-x-5 items-center" 
             id="navLinks"
             >
                 <li >
@@ -49,6 +49,15 @@ export const NavBar = () => {
                 <li>
                     <Link href="/" className="text-sm bold">Contact</Link>
                 </li>
+                <li>
+                    {/* search */}
+                    <section className="flex items-center">
+                        <input type="text" className="px-1 py-1 border border-gray-100 text-sm rounded" placeholder="search" />
+                        <button className="text-sm bg-gray-100 px-3 py-1 rounded">
+                            search
+                        </button>
+                    </section>
+                </li>
             </ul>
             <button className="text-lg bold bg-blue-500 px-3 py-1 rounded text-white" id="menuBtn" onClick={
                 () => {
@@ -56,6 +65,7 @@ export const NavBar = () => {
                 }
             }>
                 <i className="fas fa-bars"></i>
+
             </button>
 
             {
@@ -73,10 +83,10 @@ export const NavBar = () => {
                     </section>
                 ):(
                     <section id="navBtn2">
-                        <button className="text-sm text-white bg-blue-500 mr-5 px-2 py-1 rounded">
+                        <button className="text-sm text-white bg-blue-700 mr-5 px-5 py-1 rounded">
                             <Link href="/login">Login</Link>
                         </button>
-                        <button className="text-sm bg-gray-200 mr-5 px-2 py-1 rounded">
+                        <button className="text-sm bg-gray-200 mr-5 px-5 py-1 rounded">
                             <Link href="/register">Register</Link>
                         </button>
                     </section>
@@ -91,8 +101,14 @@ export const NavBar = () => {
                 <li>
                     <Link href="/" className="text-sm bold">About</Link>
                     </li>
-                <li>
-                    <Link href="/" className="text-sm bold">Contact</Link>
+                    <li>
+                    {/* search */}
+                    <section className="flex items-center">
+                        <input type="text" className="px-1 py-1 border border-gray-100 text-sm rounded w-100" placeholder="search" />
+                        <button className="text-sm bg-gray-100 px-3 py-1 rounded">
+                            search
+                        </button>
+                    </section>
                 </li>
                 {
                     (isloggedin && user.isadmin) ? (<li>
