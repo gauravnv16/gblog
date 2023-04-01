@@ -38,25 +38,17 @@ export const NavBar = () => {
                 <li >
                     <Link className="text-sm bold" href="/">Home</Link>
                 </li>
+                <li>
+                    <Link href="/blogs" className="text-sm bold">Blogs</Link>
+                </li>
                 {
                     (isloggedin && user.isadmin) ? (<li>
                         <Link href="/admin" className="text-sm bold">Admin</Link>
                     </li>):(<></>)
                 }
-                <li>
-                    <Link href="/" className="text-sm bold">About</Link>
-                </li>
+   
                 <li>
                     <Link href="/" className="text-sm bold">Contact</Link>
-                </li>
-                <li>
-                    {/* search */}
-                    <section className="flex items-center">
-                        <input type="text" className="px-1 py-1 border border-gray-100 text-sm rounded" placeholder="search" />
-                        <button className="text-sm bg-gray-100 px-3 py-1 rounded">
-                            search
-                        </button>
-                    </section>
                 </li>
             </ul>
             <button className="text-lg bold bg-blue-500 px-3 py-1 rounded text-white" id="menuBtn" onClick={
@@ -99,18 +91,9 @@ export const NavBar = () => {
                     <Link href="/" className="text-sm bold">Home</Link>
                 </li>
                 <li>
-                    <Link href="/" className="text-sm bold">About</Link>
+                    <Link href="/blogs" className="text-sm bold">Blogs</Link>
                     </li>
-                    <li>
-                    {/* search */}
-                    <section className="flex items-center">
-                        <input type="text" className="px-1 py-1 border border-gray-100 text-sm rounded w-100" placeholder="search" />
-                        <button className="text-sm bg-gray-100 px-3 py-1 rounded">
-                            search
-                        </button>
-                    </section>
-                </li>
-                {
+                    {
                     (isloggedin && user.isadmin) ? (<li>
                         <Link href="/admin" className="text-sm bold">Admin</Link>
                     </li>):(<></>)

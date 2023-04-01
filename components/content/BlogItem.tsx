@@ -13,7 +13,7 @@ export const BlogItem = ({blog}:{blog:any}) => {
         <p className="text-xs my-2">{blog.body.slice(0,100) + "..."}</p>
         <section>
         <button className="text-sm bg-gray-200 px-3 py-2 rounded mt-2">
-            <Link href={`/blog/${blog.id}`}><i className="fa-solid fa-arrow-up-right-from-square"></i></Link>
+            <Link href={`/blogs/blog/${blog.id}`}><i className="fa-solid fa-arrow-up-right-from-square"></i></Link>
         </button>
         </section>
     </section>
