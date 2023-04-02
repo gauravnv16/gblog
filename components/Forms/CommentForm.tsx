@@ -14,7 +14,7 @@ export const CommentForm = (props:any) => {
     });
 
     const [loggedIn,setLoggedIn] = useState<boolean>(false);
-
+    const [loading , setLoading] = useState<boolean>(false);
     useEffect(()=>{
         const user = JSON.parse(sessionStorage.getItem("user")!);
         if(!user){
@@ -60,9 +60,13 @@ export const CommentForm = (props:any) => {
                     height: "150px",
                     resize: "none"
                 }} name="body" id="name"/>
-                <button className="text-sm bg-blue-100 px-3 py-1 rounded">
+                {
+                    (!loading)?<button className="text-sm bg-blue-100 px-3 py-1 rounded">
                     comment
+                </button>:<button className="text-sm bg-blue-100 px-3 py-1 rounded">
+                    loading...
                 </button>
+                }
             </form>
             
         </section>

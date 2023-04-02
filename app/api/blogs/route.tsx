@@ -75,9 +75,12 @@ export async function DELETE(request: Request){
                 id
             }
         })
-        const blogs = await prisma.post.findMany() || [];
-        return NextResponse.json(blogs.reverse());
+        return NextResponse.json({
+            message:"Blog deleted successfully",
+        });
     }catch(err){
-        return NextResponse.json([]);
+        return NextResponse.json({
+            error:"Blog could not be deleted right now"
+        });
     }
 }

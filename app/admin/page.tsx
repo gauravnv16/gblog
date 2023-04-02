@@ -7,9 +7,15 @@ import { useEffect, useState } from "react";
 export default function Home() {
     const [blogCount, setBlogCount] = useState(0);
     const [blogs, setBlogs] = useState<any>([]);
+    const [filter, setFilter] = useState<any>(blogs);
     const [users, setUsers] = useState<any>([]);
 
     const [userCount, setUserCount] = useState(0);
+    const search = (e:any) => {
+        const search = e.target.value;
+        const filteredBlogs = blogs.filter((blog:any) => blog.title.toLowerCase().includes(search.toLowerCase()));
+        setFilter(filteredBlogs);
+    }
     const Blogs = () => {
         return     <section 
         className="flex flex-col justify-center items-center mt-5 w-full" style={{
@@ -18,12 +24,12 @@ export default function Home() {
     >
         <section className="flex justify-between items-center my-5 w-full">
             <h1 className="text-2xl font-bold my-2">Blogs</h1>
-            <section className="flex items-center my-5">
-                <input type="text" className="px-1 py-1 border border-gray-100 text-sm rounded" placeholder="search" />
+            {/* <section className="flex items-center my-5">
+                <input type="text" className="px-1 py-1 border border-gray-100 text-sm rounded" placeholder="search" onChange={search} />
                 <button className="text-sm bg-gray-100 px-3 py-1 rounded">
                     search
                 </button>
-            </section>
+            </section> */}
         </section>
         <section className="w-full mb-5">
             <Link href="/admin/create">
@@ -67,7 +73,27 @@ export default function Home() {
                                             Edit
                                         </span>
                                     </Link> 
-                                    <p className="text-xs bg-red-100 px-3 py-1 my-5 rounded">
+                                    <p className="text-xs bg-red-100 px-3 py-1 my-5 rounded" onClick={()=>{
+                                        const confirm = window.confirm("Are you sure you want to delete this blog?");  
+                                        if(confirm){
+                                            fetch(`http://localhost:3000/api/blog`,{
+                                                method: "DELETE",
+                                                headers: {
+                                                    "Content-Type": "application/json"
+                                                },
+                                                body: JSON.stringify({
+                                                    id: blog.id
+                                                })
+                                            }).then(res=>res.json()).then(data=>{
+                                                if(!data.error){
+                                                    alert(data.message);
+                                                    window.location.reload();
+                                                }else{
+                                                    alert(data.message);
+                                                }
+                                            })
+                                        }
+                                    }}>
                                     <i className="fas fa-trash mr-2"></i>
                                         Delete
                                     </p>
@@ -87,12 +113,12 @@ export default function Home() {
     >
         <section className="flex justify-between items-center my-5 w-full" >
             <h1 className="text-2xl font-bold my-2">Users</h1>
-            <section className="flex items-center my-5">
+            {/* <section className="flex items-center my-5">
                 <input type="text" className="px-1 py-1 border border-gray-100 text-sm rounded" placeholder="search" />
                 <button className="text-sm bg-gray-100 px-3 py-1 rounded">
                     search
                 </button>
-            </section>
+            </section> */}
         </section>
         <table className="table table-striped">
             <thead>
