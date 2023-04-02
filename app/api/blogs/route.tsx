@@ -18,7 +18,8 @@ export async function POST(request: Request){
                 title,
                 body,
                 image,
-                authorId
+                authorId,
+                links
             }
         });
 
@@ -43,7 +44,8 @@ export async function PUT(request: Request){
             title,
             body,
             image,
-            authorId
+            authorId,
+            links
         } = await request.json();
 
         await prisma.post.update({
@@ -55,6 +57,7 @@ export async function PUT(request: Request){
                 body,
                 image,
                 authorId,
+                links
             }
         })
         const blogs = await prisma.post.findMany() || [];

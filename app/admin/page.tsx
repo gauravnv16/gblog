@@ -37,13 +37,13 @@ export default function Home() {
             <thead>
                 <tr>
                     <th scope="col"
-                        className="text-sm p-2"
+                        className="text-sm p-1"
                     >S.NO</th>
                     <th scope="col"
-                        className="text-sm p-2"
+                        className="text-sm p-1"
                     >Title</th>
                     <th scope="col"
-                    className="text-sm p-2"
+                    className="text-sm p-3"
                     >Actions</th>
                 </tr>
             </thead>
@@ -57,9 +57,9 @@ export default function Home() {
                                 >{i+1}</th>
                                 <td
                                     className="text-sm p-2"
-                                >{blog.title}</td>
+                                >{blog.title.slice(0,20) + "..."}</td>
                                 <td
-                                    className="text-sm p-2"
+                                    className="text-sm p-5"
                                 >
                                     <Link href={`/admin/edit/${blog.id}`}>
                                         <span className="text-xs bg-blue-100 px-3 py-1 rounded">
@@ -67,8 +67,8 @@ export default function Home() {
                                             Edit
                                         </span>
                                     </Link> 
-                                    <p className="text-xs bg-red-100 px-3 py-1 rounded">
-                                        <i className="fas fa-trash mr-2"></i>
+                                    <p className="text-xs bg-red-100 px-3 py-1 my-5 rounded">
+                                    <i className="fas fa-trash mr-2"></i>
                                         Delete
                                     </p>
                                     </td>

@@ -23,7 +23,7 @@ export const BlogItemFulScreen = (props:any) => {
             setUser(user);
             setLoggedIn(true);
         }
-        fetch("/api/comments").then(res=>res.json()).then(data=>{
+        fetch("/api/comments").then(res=>res.json()).then((data:[])=>{
             const comments = data.filter((comment:any)=>comment.postId === props.id);
             setComments(comments);
         }).catch(err=>{
@@ -50,6 +50,9 @@ export const BlogItemFulScreen = (props:any) => {
             <h1 className="text-lg font-bold"
             >{props.title}</h1>
             <p className="text-xs my-2">{props.body}</p>
+            {
+                props.links && <p className="text-sm my-2">Links: <Link className="text-blue-700 text-decoration-line: underline " href={props.links}>Follow Link</Link></p>
+            }
             {
                 message && <p className="text-sm bg-blue-100 px-2 py-1 w-fit">{message}</p>
             }
