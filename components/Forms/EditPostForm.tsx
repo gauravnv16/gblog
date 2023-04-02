@@ -17,7 +17,7 @@ export const EditPostForm = ( props :any ) => {
             body:e.target.body.value,
             image:e.target.image.value,
             authorId:e.target.authorId.value,
-            // links:e.target.links.value
+            links:e.target.links.value
         }
       
         fetch("/api/blogs", {

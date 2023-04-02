@@ -13,9 +13,16 @@ export const CommentForm = (props:any) => {
         id:""
     });
 
+    const [loggedIn,setLoggedIn] = useState<boolean>(false);
+
     useEffect(()=>{
         const user = JSON.parse(sessionStorage.getItem("user")!);
-        setUser(user);
+        if(!user){
+            setLoggedIn(false);
+        }else {
+            setUser(user);
+            setLoggedIn(true);
+        }
     },[]);
 
     const Handler = (e:any) => {
@@ -39,6 +46,7 @@ export const CommentForm = (props:any) => {
             console.log(err)
         })
     }
+        if(!loggedIn) return <></>
         return <>
         <section className="flex flex-col justify-center items-center mt-5 w-full" style={{
             maxWidth: "500px"
