@@ -12,15 +12,25 @@ export async function GET(request: Request){
 
 export async function POST(request: Request){
     try{
-        const { title, body, image,authorId } = await request.json();
-        await prisma.post.create({
+        const { title, body, image,authorId,links } = await request.json();
+        const blog = await prisma.post.create({
             data: {
                 title,
                 body,
                 image,
-                authorId
+                authorId,
+                likes:0,
+                links
             }
         });
+
+        await prisma.like.create({
+            data:{
+                postId:blog.id,
+                authorId:authorId
+            }
+        });
+
         const blogs = await prisma.post.findMany() || [];
         return NextResponse.json(blogs.reverse());
     }catch(err){
@@ -35,7 +45,8 @@ export async function PUT(request: Request){
             title,
             body,
             image,
-            authorId
+            authorId,
+            links
         } = await request.json();
 
         await prisma.post.update({
@@ -46,7 +57,23 @@ export async function PUT(request: Request){
                 title,
                 body,
                 image,
-                authorId
+                authorId,
+                links
+            }
+        })
+        const blogs = await prisma.post.findMany() || [];
+        return NextResponse.json(blogs.reverse());
+    }catch(err){
+        return NextResponse.json([]);
+    }
+}
+
+export async function DELETE(request: Request){
+    try{
+        const { id } = await request.json();
+        await prisma.post.delete({
+            where: {
+                id
             }
         })
         const blogs = await prisma.post.findMany() || [];

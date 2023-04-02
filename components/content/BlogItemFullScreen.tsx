@@ -3,9 +3,21 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
+import { CommentForm } from "../Forms/CommentForm";
 
 export const BlogItemFulScreen = (props:any) => {
+    const [likes, setLikes] = useState(props.likes);
+    const [comments, setComments] = useState([]);
 
+    useEffect(()=>{
+        fetch("/api/comments").then(res=>res.json()).then(data=>{
+            const comments = data.filter((comment:any)=>comment.postId === props.id);
+            setComments(comments);
+        }).catch(err=>{
+            console.log(err)
+        })
+    },[comments]);
+    const [message, setMessage] = useState("");
     return (
         <>
         <section className="flex flex-col justify-center px-2 py-2 rounded m-2">
@@ -23,8 +35,60 @@ export const BlogItemFulScreen = (props:any) => {
             <h1 className="text-lg font-bold"
             >{props.title}</h1>
             <p className="text-xs my-2">{props.body}</p>
-        </section>
+            {
+                message && <p className="text-sm bg-blue-100 px-2 py-1 w-fit">{message}</p>
+            }
+            <section className="flex items-center my-2">
+                <button className="text-sm bg-green-200 px-3 py-1 rounded" onClick={()=>{
+                    
+                    const data = {
+                        postId:props.id,
+                        authorId:props.authorId
+                    }
 
+                    fetch("/api/likes",{
+                        method:"POST",
+                        headers:{
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify(data)
+
+                    }).then(res=>res.json()).then(data=>{
+                        if(data.message){
+                            setMessage(data.message)
+                        }
+                        setLikes(data.blog_like)
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+
+                }}>
+                    <i className="fas fa-thumbs-up mr-2"></i>
+                    {likes}
+                </button>
+                </section>
+        </section>
+                <CommentForm id={props.id}/>
+                <section className="flex flex-col mt-5 w-full" style={{
+                    maxWidth: "500px"
+                }}>
+                    <h1 className="text-2xl font-bold my-2">Comments</h1>
+                    <div className="flex flex-col my-2 w-full" style={{
+                        maxHeight: "200px",
+                        overflowY: "scroll"
+                    }}>
+                       {
+                        (comments.length === 0 )?(<p className="text-sm">No comments yet</p>):(
+                                comments.map((comment:any)=>(
+                                    <div className="flex flex-col my-2 w-full" key={comment.id}>
+                                        <p className="text-sm font-bold">{comment.name}</p>
+                                        <p className="text-lg">{comment.body}</p>
+                                    </div>
+                                ))
+                            )
+                        }
+                    </div>
+                </section>
         </section>
         </>
     )

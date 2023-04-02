@@ -15,7 +15,8 @@ export const CreatePostForm = () => {
             title:e.target.title.value,
             body:e.target.body.value,
             image:e.target.image.value,
-            authorId:e.target.authorId.value
+            authorId:e.target.authorId.value,
+            links:e.target.links.value
         }
       
         fetch("/api/blogs", {
@@ -66,6 +67,7 @@ export const CreatePostForm = () => {
                     resize: "none"
                 }} id="body" name="body"/>
                 <input className="w-full p-2 border border-gray-100 rounded my-2" placeholder="Image address" id="image" name="image" />
+                <input className="w-full p-2 border border-gray-100 rounded my-2" placeholder="links" id="links" name="links" />
                 {
                     (loading)? (
                         <button className="text-sm bg-green-300 px-3 py-2 rounded mt-10 w-full" disabled>

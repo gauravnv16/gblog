@@ -25,7 +25,7 @@ export const AllBlogs = (props:any) => {
         ).catch((err)=>{
             console.log(err);
         })
-    },[blogs])
+    },[])
     
 
     return(
