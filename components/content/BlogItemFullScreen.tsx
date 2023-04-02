@@ -7,9 +7,22 @@ import { CommentForm } from "../Forms/CommentForm";
 
 export const BlogItemFulScreen = (props:any) => {
     const [likes, setLikes] = useState(props.likes);
+    const [user, setUser] = useState({
+        id:"",
+        name:"",
+        email:""
+    });
+    const [loggedIn, setLoggedIn] = useState(false);
     const [comments, setComments] = useState([]);
 
     useEffect(()=>{
+        const user = JSON.parse(sessionStorage.getItem("user")!);
+        if(!user){
+            setLoggedIn(false);
+        }else {
+            setUser(user);
+            setLoggedIn(true);
+        }
         fetch("/api/comments").then(res=>res.json()).then(data=>{
             const comments = data.filter((comment:any)=>comment.postId === props.id);
             setComments(comments);
@@ -31,6 +44,8 @@ export const BlogItemFulScreen = (props:any) => {
             objectFit: "cover"
             
         }}/>
+
+
         <section className="mt-5">
             <h1 className="text-lg font-bold"
             >{props.title}</h1>
@@ -38,12 +53,16 @@ export const BlogItemFulScreen = (props:any) => {
             {
                 message && <p className="text-sm bg-blue-100 px-2 py-1 w-fit">{message}</p>
             }
+        {
+            (!loggedIn)? <><p className="text-sm my-5 bg-gray-100 px-2 py-1 w-fit"><Link className="text-sm text-blue-700 px-2 py-1 w-fit" href="/login">Login</Link> to like and comment 
+            </p></>:<></>
+        }
             <section className="flex items-center my-2">
-                <button className="text-sm bg-green-200 px-3 py-1 rounded" onClick={()=>{
+                <button className="text-sm bg-green-200 px-3 py-1 rounded" disabled={!loggedIn} onClick={()=>{
                     
                     const data = {
                         postId:props.id,
-                        authorId:props.authorId
+                        authorId:user.id
                     }
 
                     fetch("/api/likes",{
