@@ -23,7 +23,7 @@ export async function POST(request:Request){
                     password
                 }
             });
-            await prisma.$disconnect();
+            await prisma.user.findMany({});
             return NextResponse.json({
                 id:user.id,
                 name:user.name,
