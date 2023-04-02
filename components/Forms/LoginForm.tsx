@@ -44,6 +44,9 @@ export const LoginForm = () => {
             <section className="flex flex-col justify-center items-center">
                 <h1 className="text-2xl font-bold">Login</h1>
                 <p className="text-sm mb-3">Log in to your account</p>
+
+                {/* error */}
+                {error && <p className="text-sm text-red-500">{error}</p>}
                 <form className="flex flex-col space-y-5" style={{
                     width: "300px"
                 }} onSubmit={submitHandler}>

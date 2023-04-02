@@ -2,20 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
 
-export const BlogItemFulScreen = ({ id }:{id:string}) => {
-    const [blog, setBlog] = useState<any>({});
+export const BlogItemFulScreen = (props:any) => {
 
-    useEffect(() => {
-        fetch(`/api/blogs`)
-        .then((res) => res.json())
-        .then((data) => {
-            const blog = data.find((blog:any) => blog.id === id);
-            setBlog(blog);
-        }).catch((err) => {
-            console.log(err);
-        })
-    },[])
     return (
         <>
         <section className="flex flex-col justify-center px-2 py-2 rounded m-2">
@@ -24,12 +14,17 @@ export const BlogItemFulScreen = ({ id }:{id:string}) => {
             back
             </Link>
         </span>
+        <img src={props.image} alt={props.title} className="rounded h-50 my-5" style={{
+            maxHeight: "300px",
+            objectFit: "cover"
+            
+        }}/>
         <section className="mt-5">
             <h1 className="text-lg font-bold"
-            >{blog.title}</h1>
-            <p className="text-xs my-2">{blog.body}</p>
+            >{props.title}</h1>
+            <p className="text-xs my-2">{props.body}</p>
         </section>
-        <img src={blog.image} alt={blog.title} className="rounded h-50" />
+
         </section>
         </>
     )

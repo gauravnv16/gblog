@@ -3,26 +3,14 @@
 import { useEffect, useState } from "react";
 import { BlogItem } from "../content/BlogItem";
 
-export const LatestBlogs = () => {
-    const [blogs, setBlogs] = useState<any>([]);
-    useEffect(()=>{
-        fetch('/api/blogs').then(
-            (res) => res.json()
-        ).then(
-            (data)=>{
-                setBlogs(data.slice(0,2));
-            }
-        ).catch((err)=>{
-            console.log(err);
-        })
-    },[])
-
+export const LatestBlogs = (props:any) => {
+    const blogs = props.data.reverse().slice(0,3);
     return(
         <section className="flex flex-col justify-center items-center mt-5">
             <h1 className="text-2xl font-bold">Latest Blogs</h1>
             <section className="flex flex-wrap items-center justify-center ">
             {
-                blogs.map((blog:any,i:number)=><BlogItem key={i} blog={blog}/>)
+                blogs.map((blog:any,i:number)=><BlogItem key={i} {...blog}/>)
             }
             </section>
         </section>

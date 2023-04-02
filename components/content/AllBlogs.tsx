@@ -3,27 +3,29 @@
 import { useEffect, useState } from "react";
 import { BlogItem } from "../content/BlogItem";
 
-export const AllBlogs = () => {
-    const [blogs, setBlogs] = useState<any>([]);
-    const [filteredBlogs, setFilteredBlogs] = useState<any>([]);
+
+export const AllBlogs = (props:any) => {
+    const blogs = props.data.reverse();
+    const [filteredBlogs, setFilteredBlogs] = useState<any>(props.data.reverse() || []);
 
     const search = (e:any) => {
         const search = e.target.value;
         const filteredBlogs = blogs.filter((blog:any) => blog.title.toLowerCase().includes(search.toLowerCase()));
         setFilteredBlogs(filteredBlogs);
     }
-    useEffect(()=>{
-        fetch('/api/blogs').then(
-            (res) => res.json()
-        ).then(
-            (data)=>{
-                setBlogs(data);
-                setFilteredBlogs(data);
-            }
-        ).catch((err)=>{
-            console.log(err);
-        })
-    },[])
+    // useEffect(()=>{
+    //     fetch('/api/blogs').then(
+    //         (res) => res.json()
+    //     ).then(
+    //         (data)=>{
+    //             setBlogs(data);
+    //             setFilteredBlogs(data);
+    //         }
+    //     ).catch((err)=>{
+    //         console.log(err);
+    //     })
+    // },[])
+    
 
     return(
         <section className="flex flex-col justify-center items-center mt-5 w-full">
@@ -36,7 +38,7 @@ export const AllBlogs = () => {
             </section>
             <section className="flex flex-wrap items-center justify-center ">
             {
-                filteredBlogs.map((blog:any,i:number)=><BlogItem key={i} blog={blog}/>)
+                filteredBlogs.map((blog:any,i:number)=><BlogItem key={i} {...blog}/>)
             }
             </section>
         </section>
