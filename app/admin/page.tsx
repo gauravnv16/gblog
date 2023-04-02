@@ -60,7 +60,18 @@ export default function Home() {
                                 >{blog.title}</td>
                                 <td
                                     className="text-sm p-2"
-                                >Edit | Delete</td>
+                                >
+                                    <Link href={`/admin/edit/${blog.id}`}>
+                                        <span className="text-xs bg-blue-100 px-3 py-1 rounded">
+                                            <i className="fas fa-edit mr-2"></i>
+                                            Edit
+                                        </span>
+                                    </Link> 
+                                    <p className="text-xs bg-red-100 px-3 py-1 rounded">
+                                        <i className="fas fa-trash mr-2"></i>
+                                        Delete
+                                    </p>
+                                    </td>
                             </tr>
                         )
                     })
@@ -132,7 +143,7 @@ export default function Home() {
         ).catch((err) => {
             console.log(err);
         })
-    }, []);
+    }, [blogs]);
 
     useEffect(() => {
         fetch('/api/admin/users').then(
@@ -145,7 +156,7 @@ export default function Home() {
         ).catch((err) => {
             console.log(err);
         })
-    }, []);
+    }, [users]);
 
     return (
     <>

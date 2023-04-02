@@ -5,26 +5,27 @@ import { BlogItem } from "../content/BlogItem";
 
 
 export const AllBlogs = (props:any) => {
-    const blogs = props.data.reverse();
-    const [filteredBlogs, setFilteredBlogs] = useState<any>(props.data.reverse() || []);
+    const [blogs, setBlogs] = useState<any>(props.data || []);
+
+    const [filteredBlogs, setFilteredBlogs] = useState<any>(blogs || []);
 
     const search = (e:any) => {
         const search = e.target.value;
         const filteredBlogs = blogs.filter((blog:any) => blog.title.toLowerCase().includes(search.toLowerCase()));
         setFilteredBlogs(filteredBlogs);
     }
-    // useEffect(()=>{
-    //     fetch('/api/blogs').then(
-    //         (res) => res.json()
-    //     ).then(
-    //         (data)=>{
-    //             setBlogs(data);
-    //             setFilteredBlogs(data);
-    //         }
-    //     ).catch((err)=>{
-    //         console.log(err);
-    //     })
-    // },[])
+    useEffect(()=>{
+        fetch('/api/blogs').then(
+            (res) => res.json()
+        ).then(
+            (data)=>{
+                setBlogs(data);
+                setFilteredBlogs(data);
+            }
+        ).catch((err)=>{
+            console.log(err);
+        })
+    },[blogs])
     
 
     return(
