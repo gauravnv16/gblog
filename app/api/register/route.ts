@@ -23,7 +23,7 @@ export async function POST(request:Request){
                     password
                 }
             });
-    
+            await prisma.$disconnect();
             return NextResponse.json({
                 id:user.id,
                 name:user.name,

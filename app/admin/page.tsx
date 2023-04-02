@@ -1,7 +1,10 @@
 "use client"
 import { NavBar } from "@/components/Headers/NavBar";
+import prisma from "@/lib/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
+
 
 
 export default function Home() {
@@ -156,8 +159,6 @@ export default function Home() {
         </table></section>
     }
     const [ele, setEle] = useState<Boolean>(true);
-
-
     useEffect(() => {
         fetch('/api/blogs').then(
             (res) => res.json()
@@ -169,7 +170,7 @@ export default function Home() {
         ).catch((err) => {
             console.log(err);
         })
-    }, [blogs]);
+    }, []);
 
     useEffect(() => {
         fetch('/api/admin/users').then(
@@ -182,7 +183,7 @@ export default function Home() {
         ).catch((err) => {
             console.log(err);
         })
-    }, [users]);
+    }, []);
 
     return (
     <>

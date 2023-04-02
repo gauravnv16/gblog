@@ -15,6 +15,7 @@ export const CommentForm = (props:any) => {
 
     const [loggedIn,setLoggedIn] = useState<boolean>(false);
     const [loading , setLoading] = useState<boolean>(false);
+
     useEffect(()=>{
         const user = JSON.parse(sessionStorage.getItem("user")!);
         if(!user){
@@ -27,6 +28,7 @@ export const CommentForm = (props:any) => {
 
     const Handler = (e:any) => {
         e.preventDefault();
+        setLoading(true);
         const body = e.target[1].value;
         const data = {
             name:user.name,
@@ -41,7 +43,8 @@ export const CommentForm = (props:any) => {
             },
             body:JSON.stringify(data)
         }).then(res=>res.json()).then(data=>{
-            console.log(data)
+            e.target[1].value = "";
+            setLoading(false);
         }).catch(err=>{
             console.log(err)
         })
@@ -63,7 +66,7 @@ export const CommentForm = (props:any) => {
                 {
                     (!loading)?<button className="text-sm bg-blue-100 px-3 py-1 rounded">
                     comment
-                </button>:<button className="text-sm bg-blue-100 px-3 py-1 rounded">
+                </button>:<button className="text-sm bg-blue-100 px-3 py-1 rounded" disabled>
                     loading...
                 </button>
                 }

@@ -29,7 +29,7 @@ export const BlogItemFulScreen = (props:any) => {
         }).catch(err=>{
             console.log(err)
         })
-    },[comments]);
+    },[]);
     const [message, setMessage] = useState("");
     return (
         <>
