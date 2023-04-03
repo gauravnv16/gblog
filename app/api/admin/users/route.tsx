@@ -38,3 +38,34 @@ export async function DELETE(request: Request){
         });
     }
 }
+
+// put
+
+export async function PUT(request: Request){
+    const { id, name, email, password } = await request.json();
+    try{
+        const user = await prisma.user.update({
+            where: {
+                id: id
+            },
+            data: {
+                name: name,
+                email: email,
+            }
+        });
+        await prisma.$disconnect();
+        return NextResponse.json({
+            message: "User updated successfully",
+            user:{
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                isadmin: user.isadmin
+            }
+        });
+    }   catch(err){
+        return NextResponse.json({
+            error: err
+        });
+    }
+}

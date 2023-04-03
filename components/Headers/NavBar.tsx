@@ -63,8 +63,8 @@ export const NavBar = () => {
             {
                 (isloggedin) ? (
                     <section className="flex space-x-5" id="navBtn1">
-                        <button className="text-sm text-white bg-blue-500 mr-2 px-2 py-1 rounded">
-                        {user.name}</button>
+                        <Link href="/dashboard" className="text-sm text-white bg-blue-500 mr-2 px-2 py-1 rounded">
+                        {user.name}</Link>
                         <button className="text-sm bg-gray-200 mr-2 px-2 py-1 rounded"
                         onClick={
                             ()=>{
@@ -102,8 +102,8 @@ export const NavBar = () => {
             {
                 (isloggedin) ? (
                     <>
-                    <span className="text-sm text-white bg-blue-500 mr-5 px-2 py-2 my-2">
-                    {user.name}</span>
+                    <Link href="/dashboard" className="text-sm text-white bg-blue-500 mr-5 px-2 py-2 my-2">
+                    {user.name}</Link>
                     <span className="text-sm bg-gray-200 mr-5 px-2 py-2"
                         onClick={
                             ()=>{
