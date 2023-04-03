@@ -13,18 +13,22 @@ export async function POST(request:Request){
 
         if (userExists){
             if(userExists.password == password){
+                await prisma.$disconnect();
                 return NextResponse.json({
                     id:userExists.id,
                     name:userExists.name,
                     email:userExists.email,
                     isadmin:userExists.isadmin
                 });
+                
             } else {
+                await prisma.$disconnect();
                 return NextResponse.json({
                     error:"Password is incorrect"
                 });
             }
         } else {
+            await prisma.$disconnect();
             return NextResponse.json({
                 error:"User with that email does not exists"
             });

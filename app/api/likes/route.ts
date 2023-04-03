@@ -33,6 +33,7 @@ export async function POST(request:Request){
                         authorId
                     }
                 });
+                await prisma.$disconnect();
                 return new Response(JSON.stringify({
                     like,
                     blog_like
@@ -43,6 +44,7 @@ export async function POST(request:Request){
                 }));
             }
         }
+        await prisma.$disconnect();
         return new Response(JSON.stringify({
             message:"you have already liked this post",
             blog_like:blog.likes

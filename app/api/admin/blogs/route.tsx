@@ -3,10 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request){
     try{
-        const users = await prisma.user.findMany();
+        const posts = await prisma.post.findMany();
+        await prisma.$disconnect();
         return NextResponse.json({
-            users: users.reverse(),
-            userCount: users.length
+            posts: posts.reverse(),
+            postCount: posts.length
         }); 
     }   catch(err){
         return NextResponse.json([]);

@@ -1,18 +1,41 @@
+"use client"
+
 import { NavBar } from "@/components/Headers/NavBar";
 import { Loader } from "@/components/Loader/Loader";
 import { Nav } from "@/components/admin/Nav";
 import { Blogs } from "@/components/blogs/Blogs";
 import { Users } from "@/components/users/Users";
 import prisma from "@/lib/client";
+import { useEffect, useState } from "react";
 
-export default async function Home() {
+export default function Home() {
 
     try{
-        const blogCount = await prisma.post.count();
-        const blogs = await prisma.post.findMany({});
-        const userCount = await prisma.user.count();
-        const users = await prisma.user.findMany({});
-    
+        const [blogCount,setBlogCount] = useState(0); 
+        const [blogs,setBlogs] = useState<any>([]);
+        const [userCount,setUserCount] = useState(0);
+        const [users,setUsers] = useState<any>([]);
+        
+
+        useEffect(() =>{
+            fetch("/api/admin/blogs",{
+                method: "POST"
+            }).then(res => res.json()).then(data => {
+                setBlogs(data.posts);
+                setBlogCount(data.postCount);
+            }).catch(err => console.log(err));
+
+
+            fetch("/api/admin/users",{
+                method: "POST"
+            }).then(res => res.json()).then(data => {
+                setUsers(data.users);
+                setUserCount(data.userCount);
+            }
+            ).catch(err => console.log(err));
+
+
+        },[]);
         return (
         <>
         <NavBar/>

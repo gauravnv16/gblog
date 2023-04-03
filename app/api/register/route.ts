@@ -12,6 +12,7 @@ export async function POST(request:Request){
         });
     
         if (userExists){
+            await prisma.$disconnect();
             return NextResponse.json({
                 error:"User already exists"
             });
@@ -24,6 +25,7 @@ export async function POST(request:Request){
                 }
             });
             await prisma.user.findMany({});
+            await prisma.$disconnect();
             return NextResponse.json({
                 id:user.id,
                 name:user.name,

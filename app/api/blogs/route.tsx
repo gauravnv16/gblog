@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request){
     try{
-        const blogs = await prisma.post.findMany() || [];
+        const blogs = await prisma.post.findMany();
+        await prisma.$disconnect();
         return NextResponse.json(blogs.reverse());
     }catch(err){
         return NextResponse.json([]);
@@ -31,6 +32,7 @@ export async function POST(request: Request){
         });
 
         const blogs = await prisma.post.findMany() || [];
+        await prisma.$disconnect();
         return NextResponse.json(blogs.reverse());
     }catch(err){
         return NextResponse.json([]);
@@ -61,6 +63,7 @@ export async function PUT(request: Request){
             }
         })
         const blogs = await prisma.post.findMany() || [];
+        await prisma.$disconnect();
         return NextResponse.json(blogs.reverse());
     }catch(err){
         return NextResponse.json([]);
@@ -74,7 +77,8 @@ export async function DELETE(request: Request){
             where: {
                 id
             }
-        })
+        });
+        await prisma.$disconnect();
         return NextResponse.json({
             message:"Blog deleted successfully",
         });
