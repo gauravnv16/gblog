@@ -31,12 +31,13 @@ export const BlogItemFulScreen = (props:any) => {
             body: JSON.stringify({
                 id: props.id
             })
-        }).then(res=>res.json()).then((data:[])=>{
-            setComments(comments);
+        }).then(res=>res.json()).then((data:{comments:[]})=>{
+            console.log(data)
+            setComments(data.comments || []);
         }).catch(err=>{
             console.log(err)
         })
-    },[]);
+    },[comments]);
     const [message, setMessage] = useState("");
     return (
         <>

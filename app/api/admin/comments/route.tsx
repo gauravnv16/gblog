@@ -6,7 +6,7 @@ export async function POST(request: Request){
         const { id } = await request.json();
         const comments = await prisma.comment.findMany({
             where:{
-                id: id
+                postId: id
             }
         });
         await prisma.$disconnect();
