@@ -8,6 +8,7 @@ export default async function Blogs(){
     
     try{
         const blogs = await prisma.post.findMany({});
+        await prisma.$disconnect();
         return(
             <div>
                 <NavBar/>

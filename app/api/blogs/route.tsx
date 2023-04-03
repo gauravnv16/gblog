@@ -73,11 +73,23 @@ export async function PUT(request: Request){
 export async function DELETE(request: Request){
     try{
         const { id } = await request.json();
+        
         await prisma.post.delete({
             where: {
                 id
             }
         });
+        await prisma.comment.deleteMany({
+            where: {
+                postId:id
+            },
+        });
+        await prisma.like.deleteMany({
+            where: {
+                postId:id
+            },
+        });
+
         await prisma.$disconnect();
         return NextResponse.json({
             message:"Blog deleted successfully",

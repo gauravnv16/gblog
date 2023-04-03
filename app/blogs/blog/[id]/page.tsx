@@ -10,6 +10,7 @@ export default async function Blog(props:any){
                 id: props.params.id
             }
         }) || {};
+        await prisma.$disconnect();
         return(
             <div>
                 <NavBar/>

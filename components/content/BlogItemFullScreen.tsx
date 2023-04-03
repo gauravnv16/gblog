@@ -23,8 +23,15 @@ export const BlogItemFulScreen = (props:any) => {
             setUser(user);
             setLoggedIn(true);
         }
-        fetch("/api/comments").then(res=>res.json()).then((data:[])=>{
-            const comments = data.filter((comment:any)=>comment.postId === props.id);
+        fetch("/api/admin/comments",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: props.id
+            })
+        }).then(res=>res.json()).then((data:[])=>{
             setComments(comments);
         }).catch(err=>{
             console.log(err)
