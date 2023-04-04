@@ -41,7 +41,7 @@ export default function Dashboard() {
         })
             .then((res) => res.json())
             .then((data) => {
-                setComments(data.comments);
+                setComments(data.comments || []);
             }).catch(err=>{
                 console.log(err);
             });

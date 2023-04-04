@@ -9,7 +9,7 @@ export const LatestBlogs = (props:any) => {
             <h1 className="text-2xl font-bold">Latest Blogs</h1>
             <section className="flex flex-wrap items-center justify-center ">
             {
-                blogs.map((blog:any,i:number)=><BlogItem key={i} {...blog}/>)
+                blogs.map((blog:any,i:number)=><BlogItem key={i} {...blog} />)
             }
             </section>
         </section>

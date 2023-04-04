@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import { CommentForm } from "../Forms/CommentForm";
+import { Tag } from "../tags/Tag";
 
 export const BlogItemFulScreen = (props:any) => {
     const [likes, setLikes] = useState(props.likes);
@@ -32,7 +33,6 @@ export const BlogItemFulScreen = (props:any) => {
                 id: props.id
             })
         }).then(res=>res.json()).then((data:{comments:[]})=>{
-            console.log(data)
             setComments(data.comments || []);
         }).catch(err=>{
             console.log(err)
@@ -57,10 +57,14 @@ export const BlogItemFulScreen = (props:any) => {
         <section className="mt-5">
             <h1 className="text-lg font-bold"
             >{props.title}</h1>
+            {
+                (props.categoryId != "")? <Tag id={props.categoryId}/> : <></>
+            }
             <p className="text-xs my-2">{props.body}</p>
             {
-                props.links && <p className="text-sm my-2">Links: <Link className="text-blue-700 text-decoration-line: underline " href={props.links}>Follow Link</Link></p>
+                props.links && <p className="my-5 text-sm my-2">Links: <Link className="text-blue-700 text-decoration-line: underline " href={props.links}>Follow Link</Link></p>
             }
+            
             {
                 message && <p className="text-sm bg-blue-100 px-2 py-1 w-fit">{message}</p>
             }

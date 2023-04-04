@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 export const EditPostForm = ( props :any ) => {
     const [userId, setUserId] = useState<string>("");
+    const [category, setCategory] = useState<any>({});
+    const [categories,setCategories] = useState<any>([]);
     const [loading,setLoading] = useState<boolean>(false);
     
     const handler = (e: any) => {
@@ -17,7 +19,8 @@ export const EditPostForm = ( props :any ) => {
             body:e.target.body.value,
             image:e.target.image.value,
             authorId:e.target.authorId.value,
-            links:e.target.links.value
+            links:e.target.links.value,
+            categoryId:e.target.category.value
         }
       
         fetch("/api/blogs", {
@@ -41,7 +44,17 @@ export const EditPostForm = ( props :any ) => {
         const user = sessionStorage.getItem("user");
         if(user){
             setUserId(JSON.parse(user).id);
+            fetch("/api/category",{
+                method: "POST"
+            }).then(res => res.json()).then(data => {
+                setCategories(data.categories);
+                const c = data.categories.filter((category:any) => category.id === props.categoryId);
+                setCategory(c[0]);
+            }
+            ).catch(err => console.log(err));
         }
+
+        
     },[]);
 
     return <section className="p-5 items-center">
@@ -69,6 +82,17 @@ export const EditPostForm = ( props :any ) => {
                 }} id="body" name="body"  defaultValue={props.body}/>
                 <input className="w-full p-2 border border-gray-100 rounded my-2" placeholder="Image address" id="image" name="image" defaultValue={props.image} />
                 <input className="w-full p-2 border border-gray-100 rounded my-2" placeholder="links" id="links" name="links" defaultValue={props.links} />
+                <select className="w-full p-2 border border-gray-100 rounded my-2" id="category" name="category">
+                    <option value={category.id}>{category.name}</option>
+                {
+                        categories.map((category:any) => {
+                            if (category.id != props.categoryId)
+                            return <option value={category.id}
+                            key={category.id}
+                            >{category.name}</option>
+                        })
+                }
+                </select>
                 {
                     (loading)? (
                         <button className="text-sm bg-green-300 px-3 py-2 rounded mt-10 w-full" disabled>

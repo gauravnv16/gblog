@@ -15,7 +15,8 @@ export default function Home() {
         const [blogs,setBlogs] = useState<any>([]);
         const [userCount,setUserCount] = useState(0);
         const [users,setUsers] = useState<any>([]);
-        
+        const [categories,setCategories] = useState<any>([]);
+        const [categoryCount,setCategoryCount] = useState(0);
 
         useEffect(() =>{
             fetch("/api/admin/blogs",{
@@ -34,6 +35,13 @@ export default function Home() {
             }
             ).catch(err => console.log(err));
 
+            fetch("/api/category",{
+                method: "POST"
+            }).then(res => res.json()).then(data => {
+                setCategories(data.categories);
+                setCategoryCount(data.categoriesCount)
+            }
+            ).catch(err => console.log(err));
 
         },[]);
         return (
@@ -63,8 +71,18 @@ export default function Home() {
                 { userCount }
             </h1>
         </span>
+        <span className="flex justify-between border bg-blue-100 p-5 my-2" style={{
+            width: "300px"
+        }}>
+            <h1 className="text-sm">
+                Total Categories 
+            </h1>
+            <h1 className="text-sm ">
+                { categoryCount  }
+            </h1>
+        </span>
             {
-                (blogs.length > 0 && users.length > 0)?<Nav blogs={blogs} users={users}/>:<Loader/>
+                (blogCount > 0 && userCount > 0 && categoryCount>0  )?<Nav blogs={blogs} users={users} categories={categories} />:<Loader/>
             }
         </main>
         </>

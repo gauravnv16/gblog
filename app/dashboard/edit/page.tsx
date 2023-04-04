@@ -16,8 +16,8 @@ export default function Edit() {
         setLoading(true);
         const name = e.target.name.value;
         const email = e.target.email.value;
-        const password = e.target.password.value;
-        const confirmPassword = e.target.confirmPassword.value;
+        const password = "";
+        const confirmPassword = "";
         if (password !== confirmPassword) {
             alert("Passwords do not match");
             setLoading(false);
@@ -88,10 +88,10 @@ export default function Edit() {
                     <input className="border-2 border-gray-300 p-2 rounded-md" type="text" defaultValue={user.name} id="name" name="name"/>
                     <label className="text-xl">Email</label>
                     <input className="border-2 border-gray-300 p-2 rounded-md" type="email" defaultValue={user.email} id="email" name="email"/>
-                    <label className="text-xl">Password</label>
+                    {/* <label className="text-xl">Password</label>
                     <input className="border-2 border-gray-300 p-2 rounded-md" type="password" id="password" name="password" required/>
                     <label className="text-xl">Confirm Password</label>
-                    <input className="border-2 border-gray-300 p-2 rounded-md" type="password" id="confirmPassword" name="confirmPassword" required/>
+                    <input className="border-2 border-gray-300 p-2 rounded-md" type="password" id="confirmPassword" name="confirmPassword" required/> */}
                     {
                         loading ? <button className="bg-blue-500 p-2 rounded-md text-white mt-2" type="button">Loading...</button> : <button className="bg-blue-500 p-2 rounded-md text-white mt-2" type="submit">Update</button>
                     }

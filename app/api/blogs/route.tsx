@@ -13,14 +13,15 @@ export async function GET(request: Request){
 
 export async function POST(request: Request){
     try{
-        const { title, body, image, authorId, links } = await request.json();
+        const { title, body, image, authorId, links,categoryId } = await request.json();
         const blog = await prisma.post.create({
             data: {
                 title,
                 body,
                 image,
                 authorId,
-                links
+                links,
+                categoryId
             }
         });
 
@@ -47,7 +48,8 @@ export async function PUT(request: Request){
             body,
             image,
             authorId,
-            links
+            links,
+            categoryId
         } = await request.json();
 
         await prisma.post.update({
@@ -59,7 +61,8 @@ export async function PUT(request: Request){
                 body,
                 image,
                 authorId,
-                links
+                links,
+                categoryId
             }
         })
         const blogs = await prisma.post.findMany() || [];
@@ -79,11 +82,13 @@ export async function DELETE(request: Request){
                 id
             }
         });
+        
         await prisma.comment.deleteMany({
             where: {
                 postId:id
             },
         });
+
         await prisma.like.deleteMany({
             where: {
                 postId:id
