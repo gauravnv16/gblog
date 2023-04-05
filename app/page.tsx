@@ -7,34 +7,30 @@ import { AllBlogs } from "@/components/content/AllBlogs";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  try{
-      const [
+    const [
         blogs,
         setBlogs
       ] = useState([]);
 
       useEffect(() => {
-        fetch("/api/blogs")
+        fetch("/api/admin/blogs",{
+          method: "POST",
+        })
           .then((response) => response.json())
           .then((json) => {
-           setBlogs(json);
-          });
-      }, []);
+            setBlogs(json.posts.slice(0,5));
+          }).catch((err) => {
+                console.log(err);
+            });
+      }, [blogs]);
 
       return (
         <>
         <NavBar/>
-        <LatestBlogs data={blogs}/>
-        <AllBlogs data={blogs}/>
+        {
+          (blogs.length > 0)?(<><LatestBlogs data={blogs}/>
+          <AllBlogs data={blogs} isFrontpage={true}/></>):<Loader/>
+        }
         </>
       )
-  } catch (err) {
-    console.log(err);
-      return (
-        <>
-        <NavBar/>
-        <Loader/>
-        </>
-      )
-  }
 }
